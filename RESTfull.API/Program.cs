@@ -15,15 +15,21 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<RESTfull.Infrastructure.Context>(options =>
  options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
-builder.Services.AddCors(policy =>
-{
-    policy.AddPolicy("_myAllowSpecificOrigins", builder => builder.WithOrigins("https://localhost:7008/")
-         .AllowAnyMethod()
-         .AllowAnyHeader()
-         .AllowCredentials());
+builder.Services.AddCors(policy => {
+
+    policy.AddPolicy("Policy_Name", builder =>
+      builder.WithOrigins("https://localhost:7276/")
+        .SetIsOriginAllowedToAllowWildcardSubdomains()
+        .AllowAnyOrigin()
+
+
+ );
 });
 
+
+
 var app = builder.Build();
+app.UseCors("Policy_Name");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
