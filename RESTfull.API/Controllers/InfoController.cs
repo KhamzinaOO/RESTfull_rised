@@ -25,7 +25,7 @@ namespace RESTfull.API.Controllers
             return InformationDTOMapper.ToDto(info);
         }
 
-        // GET: api/Infos/5
+        // GET: api/Infos/id
         [HttpGet("{id}")]
         public async Task<ActionResult<InfoDTO>> GetInfo(Guid id)
         {
@@ -38,7 +38,20 @@ namespace RESTfull.API.Controllers
             return individualDTO;
         }
 
-        // PUT: api/Infos/5
+        // GET: /name/name
+        [HttpGet("name/{name}")]
+        public async Task<ActionResult<InfoDTO>> GetInfoByName(string name)
+        {
+            var info = await _informationRepository.GetByName(name);
+            if (info == null)
+            {
+                return NotFound();
+            }
+            var individualDTO = InformationDTOMapper.ToDto(info);
+            return individualDTO;
+        }
+
+        // PUT: api/Infos/id
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutInfo(Guid id, InfoDTO individualDTO)
@@ -66,7 +79,7 @@ namespace RESTfull.API.Controllers
             return CreatedAtAction("GetPerson", new { id = infoDto2.ID }, infoDto2);
         }
 
-        // DELETE: api/Infos/5
+        // DELETE: api/Infos/id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInfo(Guid id)
         {

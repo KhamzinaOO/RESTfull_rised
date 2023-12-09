@@ -21,8 +21,8 @@ builder.Services.AddCors(policy => {
       builder.WithOrigins("https://localhost:7276/")
         .SetIsOriginAllowedToAllowWildcardSubdomains()
         .AllowAnyOrigin()
-
-
+        .WithMethods("GET", "POST", "PUT", "DELETE")
+        .AllowAnyHeader()
  );
 });
 

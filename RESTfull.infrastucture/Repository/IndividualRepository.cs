@@ -73,6 +73,20 @@ namespace RESTfull.Infrastructure.Repository
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<List<Individual>> GetByName(string name)
+        {
+            return await _context.Individuals
+                .Include(p => p.Information)
+                .Include(p => p.PersonAddress)
+                .Include(p => p.Jobs)
+                .Include(p => p.Educations)
+                .Include(p => p.Documents)
+                .Include(p => p.RussianPassport)
+                .Include(p => p.InternationalPassport)
+                .Include(p => p.ForeignPassport)
+                .Where(p => p.Information.Name == name).ToListAsync();
+        }
+
         public async Task Save()
         {
             await _context.SaveChangesAsync();

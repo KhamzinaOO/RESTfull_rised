@@ -27,7 +27,7 @@ namespace RESTfull.API.Controllers
                 return IndividualDTOMapper.ToDto(individuals);
             }
 
-            // GET: api/Individuals/5
+            // GET: api/Individuals/ID
             [HttpGet("{id}")]
             public async Task<ActionResult<IndividualDTO>> GetPerson(Guid id)
             {
@@ -40,9 +40,22 @@ namespace RESTfull.API.Controllers
                 return individualDTO;
             }
 
-            // PUT: api/Individuals/5
-            // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-            [HttpPut("{id}")]
+        // GET: api/Individuals/ID
+        [HttpGet("/Info/{name}")]
+        public async Task<ActionResult<IEnumerable<IndividualDTO>>> GetPersonByName(String name)
+        {
+            var individual = await _individualRepository.GetByName(name);
+            if (individual == null)
+            {
+                return NotFound();
+            }
+            var individualDTO = IndividualDTOMapper.ToDto(individual);
+            return individualDTO;
+        }
+
+        // PUT: api/Individuals/ID
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
             public async Task<IActionResult> PutPerson(Guid id, IndividualDTO individualDTO)
             {
                 if (id != individualDTO.ID)
@@ -68,7 +81,7 @@ namespace RESTfull.API.Controllers
                 return CreatedAtAction("GetPerson", new { id = personDto2.ID }, personDto2);
             }
 
-            // DELETE: api/Individuals/5
+            // DELETE: api/Individuals/ID
             [HttpDelete("{id}")]
             public async Task<IActionResult> DeletePerson(Guid id)
             {
