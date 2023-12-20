@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using RESRTfull.Domain;
-using RESTfull.Infrastructure;
-using RESTfull.Infrastructure.Repository;
+using RESTful.Domain;
+using RESTful.Infrastructure;
+using RESTful.Infrastructure.Repository;
 
 namespace TestProjectIndividual
 {
